@@ -237,3 +237,27 @@ export const request3: TestRequest = {
     "4xl": 0,
   },
 };
+
+export const request4: TestRequest = {
+  request: {
+    details: {
+      sizeChoices: "small and large",
+    },
+    productSpecificData: daRaglan,
+    quantitiesBySize: [
+      {
+        quantity: 51,
+        size: "3XL",
+      },
+    ],
+  },
+  expectedPricesPerProduct: {
+    small: 0,
+    medium: 0,
+    large: 0,
+    xl: 0,
+    "2xl": 0,
+    "3xl": 71.49,
+    "4xl": 0,
+  },
+};

@@ -1,4 +1,8 @@
-import { DAEmbroideryCharges, DAScreenPrintCharges } from "./types";
+import {
+  DADTFCharges,
+  DAEmbroideryCharges,
+  DAScreenPrintCharges,
+} from "./types";
 
 export const daScreenPrintCharges: DAScreenPrintCharges = {
   singleColorSetupCharge: 40,
@@ -69,4 +73,69 @@ export const daScreenPrintCharges: DAScreenPrintCharges = {
 
 export const daEmbroideryCharges: DAEmbroideryCharges = {
   additional5kStitchCharge: 1.5,
+};
+
+export const daDtfCharges: DADTFCharges = {
+  sizeQuantityUpcharges: [
+    {
+      quantity: 12,
+      sizeChoices: "small",
+      upcharge: 7.5,
+    },
+    {
+      quantity: 24,
+      sizeChoices: "small",
+      upcharge: 7.5,
+    },
+    {
+      quantity: 48,
+      sizeChoices: "small",
+      upcharge: 5,
+    },
+    {
+      quantity: 72,
+      sizeChoices: "small",
+      upcharge: 5,
+    },
+    {
+      quantity: 12,
+      sizeChoices: "large",
+      upcharge: 12.5,
+    },
+    {
+      quantity: 24,
+      sizeChoices: "large",
+      upcharge: 12.5,
+    },
+    {
+      quantity: 48,
+      sizeChoices: "large",
+      upcharge: 10,
+    },
+    {
+      quantity: 72,
+      sizeChoices: "large",
+      upcharge: 10,
+    },
+    {
+      quantity: 12,
+      sizeChoices: "small and large",
+      upcharge: 17.5,
+    },
+    {
+      quantity: 24,
+      sizeChoices: "small and large",
+      upcharge: 17.5,
+    },
+    {
+      quantity: 48,
+      sizeChoices: "small and large",
+      upcharge: 12.5,
+    },
+    {
+      quantity: 72,
+      sizeChoices: "small and large",
+      upcharge: 12.5,
+    },
+  ],
 };

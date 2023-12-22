@@ -1,5 +1,11 @@
 import { calculateEstimate } from "../calculate";
-import { TestRequest, request1, request2, request3 } from "./testData";
+import {
+  TestRequest,
+  request1,
+  request2,
+  request3,
+  request4,
+} from "./testData";
 
 describe("Test screen print calculations", () => {
   it("should correctly calculate a screen print DA Classic Zip Hoodie request", () => {
@@ -13,6 +19,12 @@ describe("Test screen print calculations", () => {
 describe("Test embroidery calculations", () => {
   it("should correctly calculate an embroidery DA Heavyweight Zip Hoodie request", () => {
     checkTestRequest(request3);
+  });
+});
+
+describe("Test DTF calculations", () => {
+  it("should correctly calculate a DTF DA Raglan request", () => {
+    checkTestRequest(request4);
   });
 });
 

@@ -1,49 +1,46 @@
-import { daEmbroideryCharges, daScreenPrintCharges } from "./data";
 import {
-  EmbroideryRequestDetails,
+  daDtfCharges,
+  daEmbroideryCharges,
+  daScreenPrintCharges,
+} from "./data";
+import {
   GarmentSize,
   PricingScheduleEntry,
-  ProductSpecificData,
   QuoteRequest,
-  ScreenPrintRequestDetails,
-  SizeQuantity,
+  dtfRequestDetailsSchema,
   embroideryRequestDetailsSchema,
   screenPrintRequestDetailsSchema,
 } from "./types";
 
 export function calculateEstimate(quoteRequest: QuoteRequest) {
-  const { details, productSpecificData, quantitiesBySize } = quoteRequest;
-  try {
-    const parsed = screenPrintRequestDetailsSchema.parse(details);
-    return calculateWithDesignTypeCharges(
-      quantitiesBySize,
-      productSpecificData,
-      () => calculateScreenPrintExtraCharges(parsed)
-    );
-  } catch (e) {}
-  try {
-    const parsed = embroideryRequestDetailsSchema.parse(details);
-    return calculateWithDesignTypeCharges(
-      quantitiesBySize,
-      productSpecificData,
-      () => calculateEmbroideryExtraCharges(parsed)
-    );
-  } catch (e) {}
-  try {
-  } catch (e) {}
-  try {
-  } catch (e) {}
+  const designTypeSpecificFn = getDesignTypeSpecificFn(quoteRequest);
+  if (!designTypeSpecificFn) {
+    console.error("Couldn't find a valid estimate formula!");
+    return new Map<GarmentSize, number>();
+  }
+  return calculateWithDesignTypeCharges(quoteRequest, designTypeSpecificFn);
+}
 
-  console.error("Couldn't find a valid estimate formula!");
-  return new Map<GarmentSize, number>();
+function getDesignTypeSpecificFn(quoteRequest: QuoteRequest) {
+  if (screenPrintRequestDetailsSchema.safeParse(quoteRequest.details).success)
+    return calculateScreenPrintExtraCharges;
+  else if (
+    embroideryRequestDetailsSchema.safeParse(quoteRequest.details).success
+  )
+    return calculateEmbroideryExtraCharges;
+  else if (dtfRequestDetailsSchema.safeParse(quoteRequest.details).success)
+    return calculateDtfExtraCharges;
 }
 
 function calculateWithDesignTypeCharges(
-  quantitiesBySize: SizeQuantity[],
-  productSpecificData: ProductSpecificData,
-  designTypeSpecificChargeFn: () => number
+  quoteRequest: QuoteRequest,
+  designTypeSpecificChargeFn: (
+    quoteRequest: QuoteRequest,
+    quantity: number
+  ) => number
 ) {
   const pricesPerProduct = new Map<GarmentSize, number>();
+  const { quantitiesBySize, productSpecificData } = quoteRequest;
 
   for (const sizeQuantity of quantitiesBySize) {
     const basePrice = calculatePricingScheduleBasePrice(
@@ -54,7 +51,10 @@ function calculateWithDesignTypeCharges(
       (sizeUpcharge) => sizeUpcharge.size === sizeQuantity.size
     );
     const sizeUpcharge = foundSizeUpcharge ? foundSizeUpcharge.upcharge : 0;
-    const designTypeSpecificCharges = designTypeSpecificChargeFn();
+    const designTypeSpecificCharges = designTypeSpecificChargeFn(
+      quoteRequest,
+      sizeQuantity.quantity
+    );
     pricesPerProduct.set(
       sizeQuantity.size,
       basePrice + sizeUpcharge + designTypeSpecificCharges
@@ -64,9 +64,10 @@ function calculateWithDesignTypeCharges(
   return pricesPerProduct;
 }
 
-function calculateScreenPrintExtraCharges(
-  screenPrintDetails: ScreenPrintRequestDetails
-) {
+function calculateScreenPrintExtraCharges(quoteRequest: QuoteRequest) {
+  const screenPrintDetails = screenPrintRequestDetailsSchema.parse(
+    quoteRequest.details
+  );
   const locationColorCounts = [
     screenPrintDetails.location1ColorCount,
     screenPrintDetails.location2ColorCount,
@@ -99,9 +100,10 @@ function calculateScreenPrintExtraCharges(
   return locationColorUpchargeSum;
 }
 
-function calculateEmbroideryExtraCharges(
-  embroideryDetails: EmbroideryRequestDetails
-) {
+function calculateEmbroideryExtraCharges(quoteRequest: QuoteRequest) {
+  const embroideryDetails = embroideryRequestDetailsSchema.parse(
+    quoteRequest.details
+  );
   const locationStitchCounts = [
     embroideryDetails.location1StitchCount,
     embroideryDetails.location2StitchCount,
@@ -120,6 +122,31 @@ function calculateEmbroideryExtraCharges(
   );
 
   return locationStitchCountSum;
+}
+
+function calculateDtfExtraCharges(
+  quoteRequest: QuoteRequest,
+  quantity: number
+) {
+  const dtfDetails = dtfRequestDetailsSchema.parse(quoteRequest.details);
+  const quantities = [12, 24, 48, 72];
+  let quantityToUse = quantities[0];
+  for (const q of quantities) {
+    if (q > quantity) break;
+    quantityToUse = q;
+  }
+  const sizeQuantityUpcharge = daDtfCharges.sizeQuantityUpcharges.find(
+    (entry) =>
+      entry.quantity === quantityToUse &&
+      entry.sizeChoices === dtfDetails.sizeChoices
+  );
+  if (!sizeQuantityUpcharge) {
+    console.error(
+      `Couldn't find a DTF upcharge for quantity ${quantity} and size choices ${dtfDetails.sizeChoices}!`
+    );
+    return 0;
+  }
+  return sizeQuantityUpcharge.upcharge;
 }
 
 function calculatePricingScheduleBasePrice(

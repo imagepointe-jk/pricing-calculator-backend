@@ -23,6 +23,9 @@ const designTypeSchema = z.enum(designTypes);
 const stitchCounts = ["5", "10"] as const;
 const stitchCountSchema = z.enum(stitchCounts);
 
+const dtfSizeChoices = ["small", "large", "small and large"] as const;
+const dtfSizeChoiceSchema = z.enum(dtfSizeChoices);
+
 const locationUpchargeSchema = z.object({
   locationNumber: z.number(),
   colorCount: z.number(),
@@ -31,6 +34,12 @@ const locationUpchargeSchema = z.object({
 
 const sizeUpchargeSchema = z.object({
   size: garmentSizeSchema,
+  upcharge: z.number(),
+});
+
+const dtfSizeQuantityUpchargeSchema = z.object({
+  sizeChoices: dtfSizeChoiceSchema,
+  quantity: z.number(),
   upcharge: z.number(),
 });
 
@@ -44,6 +53,10 @@ const daEmbroideryChargesSchema = z.object({
   additional5kStitchCharge: z.number(),
 });
 
+const daDtfChargesSchema = z.object({
+  sizeQuantityUpcharges: z.array(dtfSizeQuantityUpchargeSchema),
+});
+
 export const screenPrintRequestDetailsSchema = z.object({
   location1ColorCount: z.number(),
   location2ColorCount: z.number(),
@@ -55,6 +68,10 @@ export const embroideryRequestDetailsSchema = z.object({
   location1StitchCount: stitchCountSchema,
   location2StitchCount: stitchCountSchema,
   location3StitchCount: stitchCountSchema,
+});
+
+export const dtfRequestDetailsSchema = z.object({
+  sizeChoices: dtfSizeChoiceSchema,
 });
 
 const pricingScheduleEntrySchema = z.object({
@@ -78,21 +95,28 @@ const quoteRequestSchema = z.object({
   details: z.union([
     screenPrintRequestDetailsSchema,
     embroideryRequestDetailsSchema,
+    dtfRequestDetailsSchema,
   ]),
 });
 
 export type LocationUpcharge = z.infer<typeof locationUpchargeSchema>;
 export type SizeUpcharge = z.infer<typeof sizeUpchargeSchema>;
+
 export type DAScreenPrintCharges = z.infer<typeof daScreenPrintChargesSchema>;
 export type DAEmbroideryCharges = z.infer<typeof daEmbroideryChargesSchema>;
+export type DADTFCharges = z.infer<typeof daDtfChargesSchema>;
+
 export type DesignType = z.infer<typeof designTypeSchema>;
 export type GarmentSize = z.infer<typeof garmentSizeSchema>;
+
 export type ScreenPrintRequestDetails = z.infer<
   typeof screenPrintRequestDetailsSchema
 >;
 export type EmbroideryRequestDetails = z.infer<
   typeof embroideryRequestDetailsSchema
 >;
+export type DTFRequestDetails = z.infer<typeof dtfRequestDetailsSchema>;
+
 export type PricingScheduleEntry = z.infer<typeof pricingScheduleEntrySchema>;
 export type SizeQuantity = z.infer<typeof sizeQuantitySchema>;
 export type ProductSpecificData = z.infer<typeof productSpecificDataSchema>;
