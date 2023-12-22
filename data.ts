@@ -139,3 +139,5 @@ export const daDtfCharges: DADTFCharges = {
     },
   ],
 };
+
+export const dyeSubChargePerLocation = 5;

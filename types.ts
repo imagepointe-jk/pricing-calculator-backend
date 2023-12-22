@@ -74,6 +74,10 @@ export const dtfRequestDetailsSchema = z.object({
   sizeChoices: dtfSizeChoiceSchema,
 });
 
+export const dyeSubRequestDetailsSchema = z.object({
+  locationCount: z.enum(["1", "2"]),
+});
+
 const pricingScheduleEntrySchema = z.object({
   quantity: z.number(),
   pricePerProduct: z.number(),
@@ -96,6 +100,7 @@ const quoteRequestSchema = z.object({
     screenPrintRequestDetailsSchema,
     embroideryRequestDetailsSchema,
     dtfRequestDetailsSchema,
+    dyeSubRequestDetailsSchema,
   ]),
 });
 
@@ -116,6 +121,7 @@ export type EmbroideryRequestDetails = z.infer<
   typeof embroideryRequestDetailsSchema
 >;
 export type DTFRequestDetails = z.infer<typeof dtfRequestDetailsSchema>;
+export type DyeSubRequestDetails = z.infer<typeof dyeSubRequestDetailsSchema>;
 
 export type PricingScheduleEntry = z.infer<typeof pricingScheduleEntrySchema>;
 export type SizeQuantity = z.infer<typeof sizeQuantitySchema>;

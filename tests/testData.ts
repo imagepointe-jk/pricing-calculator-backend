@@ -60,6 +60,53 @@ const daClassicZipHoodie: ProductSpecificData = {
   ],
 };
 
+const daClassicPulloverHoodie: ProductSpecificData = {
+  pricingSchedule: [
+    {
+      quantity: 12,
+      pricePerProduct: 82.99,
+    },
+    {
+      quantity: 24,
+      pricePerProduct: 65.59,
+    },
+    {
+      quantity: 48,
+      pricePerProduct: 57.99,
+    },
+    {
+      quantity: 72,
+      pricePerProduct: 55.49,
+    },
+    {
+      quantity: 144,
+      pricePerProduct: 54.49,
+    },
+    {
+      quantity: 288,
+      pricePerProduct: 52.99,
+    },
+    {
+      quantity: 500,
+      pricePerProduct: 49.99,
+    },
+  ],
+  sizeUpcharges: [
+    {
+      size: "2XL",
+      upcharge: 5,
+    },
+    {
+      size: "3XL",
+      upcharge: 7,
+    },
+    {
+      size: "4XL",
+      upcharge: 9,
+    },
+  ],
+};
+
 const daRaglan: ProductSpecificData = {
   pricingSchedule: [
     {
@@ -258,6 +305,30 @@ export const request4: TestRequest = {
     xl: 0,
     "2xl": 0,
     "3xl": 71.49,
+    "4xl": 0,
+  },
+};
+
+export const request5: TestRequest = {
+  request: {
+    details: {
+      locationCount: "2",
+    },
+    productSpecificData: daClassicPulloverHoodie,
+    quantitiesBySize: [
+      {
+        quantity: 293,
+        size: "XL",
+      },
+    ],
+  },
+  expectedPricesPerProduct: {
+    small: 0,
+    medium: 0,
+    large: 0,
+    xl: 62.99,
+    "2xl": 0,
+    "3xl": 0,
     "4xl": 0,
   },
 };

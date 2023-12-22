@@ -2,12 +2,14 @@ import {
   daDtfCharges,
   daEmbroideryCharges,
   daScreenPrintCharges,
+  dyeSubChargePerLocation,
 } from "./data";
 import {
   GarmentSize,
   PricingScheduleEntry,
   QuoteRequest,
   dtfRequestDetailsSchema,
+  dyeSubRequestDetailsSchema,
   embroideryRequestDetailsSchema,
   screenPrintRequestDetailsSchema,
 } from "./types";
@@ -30,6 +32,8 @@ function getDesignTypeSpecificFn(quoteRequest: QuoteRequest) {
     return calculateEmbroideryExtraCharges;
   else if (dtfRequestDetailsSchema.safeParse(quoteRequest.details).success)
     return calculateDtfExtraCharges;
+  else if (dyeSubRequestDetailsSchema.safeParse(quoteRequest.details).success)
+    return calculateDyeSubExtraCharges;
 }
 
 function calculateWithDesignTypeCharges(
@@ -147,6 +151,12 @@ function calculateDtfExtraCharges(
     return 0;
   }
   return sizeQuantityUpcharge.upcharge;
+}
+
+function calculateDyeSubExtraCharges(quoteRequest: QuoteRequest) {
+  const dyeSubDetails = dyeSubRequestDetailsSchema.parse(quoteRequest.details);
+  const locationCount = +dyeSubDetails.locationCount;
+  return dyeSubChargePerLocation * locationCount;
 }
 
 function calculatePricingScheduleBasePrice(

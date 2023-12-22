@@ -5,6 +5,7 @@ import {
   request2,
   request3,
   request4,
+  request5,
 } from "./testData";
 
 describe("Test screen print calculations", () => {
@@ -25,6 +26,12 @@ describe("Test embroidery calculations", () => {
 describe("Test DTF calculations", () => {
   it("should correctly calculate a DTF DA Raglan request", () => {
     checkTestRequest(request4);
+  });
+});
+
+describe("Test dye sub calculations", () => {
+  it("should correctly calculate a dye sub DA Classic Pullover Hoodie request", () => {
+    checkTestRequest(request5);
   });
 });
 
