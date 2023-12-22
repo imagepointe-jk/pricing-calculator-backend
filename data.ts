@@ -1,4 +1,4 @@
-import { DAScreenPrintCharges } from "./types";
+import { DAEmbroideryCharges, DAScreenPrintCharges } from "./types";
 
 export const daScreenPrintCharges: DAScreenPrintCharges = {
   singleColorSetupCharge: 40,
@@ -65,4 +65,8 @@ export const daScreenPrintCharges: DAScreenPrintCharges = {
       upcharge: 3.75,
     },
   ],
+};
+
+export const daEmbroideryCharges: DAEmbroideryCharges = {
+  additional5kStitchCharge: 1.5,
 };

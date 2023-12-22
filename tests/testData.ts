@@ -107,6 +107,53 @@ const daRaglan: ProductSpecificData = {
   ],
 };
 
+const daHeavyweightZip: ProductSpecificData = {
+  pricingSchedule: [
+    {
+      quantity: 12,
+      pricePerProduct: 112.99,
+    },
+    {
+      quantity: 24,
+      pricePerProduct: 94.99,
+    },
+    {
+      quantity: 48,
+      pricePerProduct: 89.98,
+    },
+    {
+      quantity: 72,
+      pricePerProduct: 84.99,
+    },
+    {
+      quantity: 144,
+      pricePerProduct: 83.49,
+    },
+    {
+      quantity: 288,
+      pricePerProduct: 81.99,
+    },
+    {
+      quantity: 500,
+      pricePerProduct: 79.99,
+    },
+  ],
+  sizeUpcharges: [
+    {
+      size: "2XL",
+      upcharge: 5,
+    },
+    {
+      size: "3XL",
+      upcharge: 7,
+    },
+    {
+      size: "4XL",
+      upcharge: 9,
+    },
+  ],
+};
+
 export const request1: TestRequest = {
   request: {
     productSpecificData: daClassicZipHoodie,
@@ -161,6 +208,32 @@ export const request2: TestRequest = {
     xl: 0,
     "2xl": 0,
     "3xl": 62.99,
+    "4xl": 0,
+  },
+};
+
+export const request3: TestRequest = {
+  request: {
+    details: {
+      location1StitchCount: "10",
+      location2StitchCount: "5",
+      location3StitchCount: "10",
+    },
+    productSpecificData: daHeavyweightZip,
+    quantitiesBySize: [
+      {
+        quantity: 72,
+        size: "2XL",
+      },
+    ],
+  },
+  expectedPricesPerProduct: {
+    small: 0,
+    medium: 0,
+    large: 0,
+    xl: 0,
+    "2xl": 102.99,
+    "3xl": 0,
     "4xl": 0,
   },
 };
