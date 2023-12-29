@@ -1,4 +1,7 @@
 import express, { json } from "express";
+import { parseQuoteRequest } from "./validations";
+import { BAD_REQUEST, OK } from "./statusCodes";
+import { calculateEstimate } from "./calculate";
 
 const app = express();
 const isDevMode = app.get("env") === "development";
@@ -19,8 +22,14 @@ if (isDevMode) {
   console.log("=====DEV ENVIRONMENT======");
 }
 
-app.get("/", (req, res) => {
-  res.status(200).send({ message: "Llamas" });
+app.post("/quote-request", (req, res) => {
+  try {
+    const quoteRequest = parseQuoteRequest(req.body);
+    const estimate = calculateEstimate(quoteRequest);
+    return res.status(OK).send(Object.fromEntries(estimate));
+  } catch (error) {
+    return res.status(BAD_REQUEST).send(error);
+  }
 });
 
 const port = process.env.PORT || 3000;

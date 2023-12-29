@@ -54,11 +54,14 @@ function calculateWithDesignTypeCharges(
     const foundSizeUpcharge = productSpecificData.sizeUpcharges.find(
       (sizeUpcharge) => sizeUpcharge.size === sizeQuantity.size
     );
-    const sizeUpcharge = foundSizeUpcharge ? foundSizeUpcharge.upcharge : 0;
-    const designTypeSpecificCharges = designTypeSpecificChargeFn(
-      quoteRequest,
-      sizeQuantity.quantity
-    );
+    const sizeUpcharge =
+      foundSizeUpcharge && sizeQuantity.quantity > 0
+        ? foundSizeUpcharge.upcharge
+        : 0;
+    const designTypeSpecificCharges =
+      sizeQuantity.quantity > 0
+        ? designTypeSpecificChargeFn(quoteRequest, sizeQuantity.quantity)
+        : 0;
     pricesPerProduct.set(
       sizeQuantity.size,
       basePrice + sizeUpcharge + designTypeSpecificCharges
@@ -155,7 +158,7 @@ function calculateDtfExtraCharges(
 
 function calculateDyeSubExtraCharges(quoteRequest: QuoteRequest) {
   const dyeSubDetails = dyeSubRequestDetailsSchema.parse(quoteRequest.details);
-  const locationCount = +dyeSubDetails.locationCount;
+  const locationCount = +dyeSubDetails.dyeSubLocationCount;
   return dyeSubChargePerLocation * locationCount;
 }
 
@@ -163,6 +166,7 @@ function calculatePricingScheduleBasePrice(
   pricingSchedule: PricingScheduleEntry[],
   quantity: number
 ) {
+  if (quantity === 0) return 0;
   if (pricingSchedule.length === 0) {
     console.error("Empty pricing schedule!");
     return 0;

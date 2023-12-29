@@ -312,7 +312,7 @@ export const request4: TestRequest = {
 export const request5: TestRequest = {
   request: {
     details: {
-      locationCount: "2",
+      dyeSubLocationCount: "2",
     },
     productSpecificData: daClassicPulloverHoodie,
     quantitiesBySize: [
