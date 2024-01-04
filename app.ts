@@ -6,7 +6,9 @@ import { calculateEstimate } from "./calculate";
 const app = express();
 const isDevMode = app.get("env") === "development";
 
-const allowedOrigins = [""];
+const allowedOrigins = [
+  "https://react-frontend-production-1eb8.up.railway.app",
+];
 app.use((req, res, next) => {
   const origin = req.headers.origin;
   if (origin && (isDevMode || allowedOrigins.includes(origin))) {
