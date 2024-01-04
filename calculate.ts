@@ -119,6 +119,7 @@ function calculateEmbroideryExtraCharges(quoteRequest: QuoteRequest) {
 
   const locationStitchCountSum = locationStitchCounts.reduce(
     (accum, stitchCount, i) => {
+      if (stitchCount === "0") return accum;
       const locationCharge = i === 0 ? 0 : 5;
       const stitchCountToCharge = +stitchCount - 5; //5k stitches included per location
       const chargePerExtra5k = daEmbroideryCharges.additional5kStitchCharge;

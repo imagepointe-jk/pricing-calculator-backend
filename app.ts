@@ -30,6 +30,7 @@ app.post("/quote-request", (req, res) => {
     const estimate = calculateEstimate(quoteRequest);
     return res.status(OK).send(Object.fromEntries(estimate));
   } catch (error) {
+    console.error("Received bad request", error);
     return res.status(BAD_REQUEST).send(error);
   }
 });
