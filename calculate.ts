@@ -146,11 +146,11 @@ function calculateDtfExtraCharges(
   const sizeQuantityUpcharge = daDtfCharges.sizeQuantityUpcharges.find(
     (entry) =>
       entry.quantity === quantityToUse &&
-      entry.sizeChoices === dtfDetails.sizeChoices
+      entry.sizeChoices === dtfDetails.dtfSizeChoices
   );
   if (!sizeQuantityUpcharge) {
     console.error(
-      `Couldn't find a DTF upcharge for quantity ${quantity} and size choices ${dtfDetails.sizeChoices}!`
+      `Couldn't find a DTF upcharge for quantity ${quantity} and size choices ${dtfDetails.dtfSizeChoices}!`
     );
     return 0;
   }

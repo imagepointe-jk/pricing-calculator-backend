@@ -14,6 +14,8 @@ export type TestRequest = {
 };
 
 const daClassicZipHoodie: ProductSpecificData = {
+  imageUrl: "",
+  productName: "",
   pricingSchedule: [
     {
       quantity: 12,
@@ -61,6 +63,8 @@ const daClassicZipHoodie: ProductSpecificData = {
 };
 
 const daClassicPulloverHoodie: ProductSpecificData = {
+  imageUrl: "",
+  productName: "",
   pricingSchedule: [
     {
       quantity: 12,
@@ -108,6 +112,8 @@ const daClassicPulloverHoodie: ProductSpecificData = {
 };
 
 const daRaglan: ProductSpecificData = {
+  imageUrl: "",
+  productName: "",
   pricingSchedule: [
     {
       quantity: 12,
@@ -155,6 +161,8 @@ const daRaglan: ProductSpecificData = {
 };
 
 const daHeavyweightZip: ProductSpecificData = {
+  imageUrl: "",
+  productName: "",
   pricingSchedule: [
     {
       quantity: 12,
@@ -288,7 +296,7 @@ export const request3: TestRequest = {
 export const request4: TestRequest = {
   request: {
     details: {
-      sizeChoices: "small and large",
+      dtfSizeChoices: "small and large",
     },
     productSpecificData: daRaglan,
     quantitiesBySize: [
@@ -327,6 +335,146 @@ export const request5: TestRequest = {
     medium: 0,
     large: 0,
     xl: 62.99,
+    "2xl": 0,
+    "3xl": 0,
+    "4xl": 0,
+  },
+};
+
+export const request6: TestRequest = {
+  request: {
+    details: {
+      location1StitchCount: "10",
+      location2StitchCount: "10",
+      location3StitchCount: "10",
+    },
+    productSpecificData: daRaglan,
+    quantitiesBySize: [
+      {
+        quantity: 133,
+        size: "2XL",
+      },
+      {
+        quantity: 1187,
+        size: "3XL",
+      },
+      {
+        quantity: 56,
+        size: "4XL",
+      },
+    ],
+  },
+  expectedPricesPerProduct: {
+    small: 0,
+    medium: 0,
+    large: 0,
+    xl: 0,
+    "2xl": 69.49,
+    "3xl": 63.99,
+    "4xl": 75.49,
+  },
+};
+
+export const request7: TestRequest = {
+  request: {
+    details: {
+      location1StitchCount: "10",
+      location2StitchCount: "5",
+      location3StitchCount: "0",
+    },
+    productSpecificData: daClassicZipHoodie,
+    quantitiesBySize: [
+      {
+        quantity: 6,
+        size: "Small",
+      },
+      {
+        quantity: 11,
+        size: "XL",
+      },
+    ],
+  },
+  expectedPricesPerProduct: {
+    small: 96.49,
+    medium: 0,
+    large: 0,
+    xl: 96.49,
+    "2xl": 0,
+    "3xl": 0,
+    "4xl": 0,
+  },
+};
+
+export const request8: TestRequest = {
+  request: {
+    details: {
+      dtfSizeChoices: "large",
+    },
+    productSpecificData: daHeavyweightZip,
+    quantitiesBySize: [
+      {
+        quantity: 811,
+        size: "Medium",
+      },
+      {
+        quantity: 35,
+        size: "2XL",
+      },
+    ],
+  },
+  expectedPricesPerProduct: {
+    small: 0,
+    medium: 89.99,
+    large: 0,
+    xl: 0,
+    "2xl": 112.49,
+    "3xl": 0,
+    "4xl": 0,
+  },
+};
+
+export const request9: TestRequest = {
+  request: {
+    details: {
+      dtfSizeChoices: "small and large",
+    },
+    productSpecificData: daClassicPulloverHoodie,
+    quantitiesBySize: [
+      {
+        quantity: 47,
+        size: "4XL",
+      },
+    ],
+  },
+  expectedPricesPerProduct: {
+    small: 0,
+    medium: 0,
+    large: 0,
+    xl: 0,
+    "2xl": 0,
+    "3xl": 0,
+    "4xl": 92.09,
+  },
+};
+
+export const request10: TestRequest = {
+  request: {
+    details: {
+      dtfSizeChoices: "small",
+    },
+    productSpecificData: daClassicZipHoodie,
+    quantitiesBySize: [
+      {
+        quantity: 8,
+        size: "Large",
+      },
+    ],
+  },
+  expectedPricesPerProduct: {
+    small: 0,
+    medium: 0,
+    large: 97.49,
+    xl: 0,
     "2xl": 0,
     "3xl": 0,
     "4xl": 0,

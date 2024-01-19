@@ -2,10 +2,15 @@ import { calculateEstimate } from "../calculate";
 import {
   TestRequest,
   request1,
+  request10,
   request2,
   request3,
   request4,
   request5,
+  request6,
+  request7,
+  request8,
+  request9,
 } from "./testData";
 
 describe("Test screen print calculations", () => {
@@ -21,11 +26,26 @@ describe("Test embroidery calculations", () => {
   it("should correctly calculate an embroidery DA Heavyweight Zip Hoodie request", () => {
     checkTestRequest(request3);
   });
+  it("should correctly calculate an embroidery DA Raglan request", () => {
+    checkTestRequest(request6);
+  });
+  it("should correctly calculate an embroidery DA Classic Zip Hoodie request", () => {
+    checkTestRequest(request7);
+  });
 });
 
 describe("Test DTF calculations", () => {
   it("should correctly calculate a DTF DA Raglan request", () => {
     checkTestRequest(request4);
+  });
+  it("should correctly calculate a DTF DA Heavyweight Zip Hoodie request", () => {
+    checkTestRequest(request8);
+  });
+  it("should correctly calculate a DTF DA Classic Pullover Hoodie request", () => {
+    checkTestRequest(request9);
+  });
+  it("should correctly calculate a DTF DA Classic Zip Hoodie request", () => {
+    checkTestRequest(request10);
   });
 });
 
